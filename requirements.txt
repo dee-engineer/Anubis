@@ -1,0 +1,8 @@
+mss
+psutil
+pynput
+opencv-python
+pyperclip
+cryptography
+pystyle
+pyautogui
