@@ -1,0 +1,50 @@
+RAT Project
+A modular Remote Access Tool (RAT) system with client-server architecture, supporting features like system information gathering, file transfer, keylogging, and more. Enhanced with Diffie-Hellman key exchange, authentication, logging, a React-based GUI, rate limiting, and exponential backoff.
+Setup
+
+Install dependencies:
+pip install -r client/requirements.txt
+pip install -r server/requirements.txt
+
+
+Configure client/config/config.json and server/config/config.json with appropriate IP/port settings.
+
+Set the authentication secret in client/config/auth_secret.txt and server/config/auth_secret.txt.
+
+Run the server:
+python server/server.py
+
+
+Run the GUI (optional):
+python server/server_gui.py
+
+
+Run the client:
+python client/client.py
+
+
+
+Features
+
+System information gathering
+File upload/download
+Screenshot and webcam capture
+Keylogging
+Process management
+Clipboard operations
+File encryption/decryption
+Persistence
+Screen locking
+Message display
+URL opening
+Network information
+Command queue for offline processing
+
+Security
+
+Uses Diffie-Hellman key exchange for encryption.
+Requires authentication with a pre-shared secret.
+Implements rate limiting to prevent abuse.
+
+Ethical Use
+This tool is intended for authorized penetration testing and system administration. Use without explicit consent is illegal and unethical.

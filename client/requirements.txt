@@ -4,5 +4,4 @@ pynput
 opencv-python
 pyperclip
 cryptography
-pystyle
 pyautogui

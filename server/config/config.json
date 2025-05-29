@@ -1,0 +1,6 @@
+{
+    "bind_ip": "0.0.0.0",
+    "bind_port": 4444,
+    "rate_limit": 5,
+    "rate_limit_window": 60
+}

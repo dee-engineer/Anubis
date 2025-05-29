@@ -1,0 +1,7 @@
+{
+    "server_ip": "127.0.0.1",
+    "server_port": 4444,
+    "initial_backoff": 5,
+    "max_backoff": 60,
+    "backoff_factor": 2
+}
