@@ -57,6 +57,6 @@ pip install dist/Anubis-1.0.0-py3-none-any.whl
 # Start project
 
 ```bash
-python server/server.py / python server/server_gui.py
+python server/server.py # For GUI: python server/server_gui.py
 python client/client.py
 ```

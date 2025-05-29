@@ -26,23 +26,3 @@ def initialize_encryption(client_socket):
         backend=default_backend()
     ).derive(shared_key)
     return Fernet(base64.urlsafe_b64encode(derived_key))
-
-def encrypt_data(data):
-    # Note: Per-client cipher is stored in client_info_map
-    try:
-        if isinstance(data, dict):
-            data = json.dumps(data)
-        if isinstance(data, str):
-            data = data.encode('utf-8')
-        return cipher.encrypt(data)
-    except Exception as e:
-        print(f"[-] Encryption error: {e}")
-        return None
-
-def decrypt_data(encrypted_data):
-    try:
-        decrypted = cipher.decrypt(encrypted_data)
-        return decrypted.decode('utf-8')
-    except Exception as e:
-        print(f"[-] Decryption error: {e}")
-        return None

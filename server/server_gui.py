@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
-from modules.communication import send_data, recv_data
-from modules.client_management import client_info_map
+from modules.communication import send_data, recv_data, client_info_map
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 

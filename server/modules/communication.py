@@ -1,7 +1,7 @@
 import socket
 import json
 import time
-from .encryption import encrypt_data, decrypt_data, initialize_encryption
+from .encryption import initialize_encryption
 from .authentication import authenticate_client
 from .logging_config import logging
 from .rate_limiter import is_rate_limited
@@ -16,9 +16,13 @@ server_socket = None
 
 def send_data(target_socket, command_dict):
     try:
-        encrypted_data = encrypt_data(command_dict)
-        if encrypted_data:
-            target_socket.send(encrypted_data)
+        ip_str = next((k for k, v in client_info_map.items() if v['socket'] == target_socket), 'Unknown')
+        cipher = client_info_map.get(ip_str, {}).get('cipher')
+        if not cipher:
+            logging.error(f"No cipher found for client {ip_str}", extra={'session_id': 'N/A'})
+            return
+        encrypted_data = cipher.encrypt(json.dumps(command_dict).encode('utf-8'))
+        target_socket.send(encrypted_data)
     except Exception as e:
         logging.error(f"Error sending data: {e}", extra={'session_id': 'N/A'})
         from .client_management import handle_client_disconnection
@@ -26,27 +30,36 @@ def send_data(target_socket, command_dict):
 
 def recv_data(target_socket):
     try:
+        ip_str = next((k for k, v in client_info_map.items() if v['socket'] == target_socket), 'Unknown')
+        cipher = client_info_map.get(ip_str, {}).get('cipher')
+        if not cipher:
+            logging.error(f"No cipher found for client {ip_str}", extra={'session_id': 'N/A'})
+            return None
         while True:
             chunk = target_socket.recv(4096)
             if not chunk:
                 from .client_management import handle_client_disconnection
                 handle_client_disconnection(target_socket)
                 return None
-            decrypted_data = decrypt_data(chunk)
-            if decrypted_data:
-                try:
-                    return json.loads(decrypted_data)
-                except json.JSONDecodeError:
-                    continue
-            return None
+            try:
+                decrypted_data = cipher.decrypt(chunk).decode('utf-8')
+                return json.loads(decrypted_data)
+            except json.JSONDecodeError:
+                continue
+            except Exception as e:
+                logging.error(f"Decryption error: {e}", extra={'session_id': 'N/A'})
+                return None
     except Exception as e:
         logging.error(f"Recv_data error: {e}", extra={'session_id': 'N/A'})
         return None
 
 def server_listen():
     global server_socket, targets, ips, client_info_map, next_session_id, stop_threads
-    bind_ip = "0.0.0.0"
-    bind_port = 4444
+    with open('config/config.json') as f:
+        config = json.load(f)
+    bind_ip = config['bind_ip']
+    bind_port = config['bind_port']
+    
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -68,11 +81,17 @@ def server_listen():
                 client_socket.close()
                 continue
             client_socket.settimeout(None)
-            client_info_map[f"{client_address[0]}:{client_address[1]}"]["cipher"] = initialize_encryption(client_socket)
+            
+            # Initialize encryption
+            cipher = initialize_encryption(client_socket)
+            
+            # Authenticate client
             if not authenticate_client(client_socket):
                 logging.error(f"Authentication failed for {client_address[0]}:{client_address[1]}", extra={'session_id': 'N/A'})
                 client_socket.close()
                 continue
+            
+            # Store client information
             initial_data_payload = recv_data(client_socket)
             if initial_data_payload and isinstance(initial_data_payload, dict) and initial_data_payload.get("type") == "initial_info":
                 info_str = initial_data_payload.get("data", "Unknown,Unknown,Unknown")
@@ -87,7 +106,8 @@ def server_listen():
                     'mac': mac_address,
                     'user': username,
                     'session_id': next_session_id,
-                    'connected_at': time.strftime("%Y-%m-%d %H:%M:%S")
+                    'connected_at': time.strftime("%Y-%m-%d %H:%M:%S"),
+                    'cipher': cipher
                 }
                 session_id = next_session_id
                 next_session_id += 1
