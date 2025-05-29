@@ -2,12 +2,15 @@
 name = "Anubis"
 version = "1.0.0"
 description = "A modular Remote Access Tool (RAT) system"
+
 authors = [
     { name = "Divine Chukwu", email = "chukwudivineify@gmail.com" }
 ]
-license = { text = "MIT" }
+
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.7"
+
 dependencies = [
     "mss",
     "psutil",
@@ -17,8 +20,18 @@ dependencies = [
     "cryptography",
     "pyautogui",
     "pystyle",
-    "flask",
+    "flask"
 ]
 
 [project.urls]
 Homepage = "https://github.com/dee-engineer/Anubis"
+
+[build-system]
+requires = ["setuptools>=77.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+include = ["client", "server"]

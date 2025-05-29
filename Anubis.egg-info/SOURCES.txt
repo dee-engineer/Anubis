@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+./client/client.py
+./server/server.py
+./server/server_gui.py
+Anubis.egg-info/PKG-INFO
+Anubis.egg-info/SOURCES.txt
+Anubis.egg-info/dependency_links.txt
+Anubis.egg-info/requires.txt
+Anubis.egg-info/top_level.txt
+client/client.py
+server/server.py
+server/server_gui.py

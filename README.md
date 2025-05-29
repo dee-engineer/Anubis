@@ -1,50 +1,62 @@
-RAT Project
-A modular Remote Access Tool (RAT) system with client-server architecture, supporting features like system information gathering, file transfer, keylogging, and more. Enhanced with Diffie-Hellman key exchange, authentication, logging, a React-based GUI, rate limiting, and exponential backoff.
-Setup
+# Anubis - Modular Remote Access Tool (RAT)
 
-Install dependencies:
+Anubis is a modular Remote Access Tool (RAT) with a client-server architecture. It provides powerful capabilities for remote system control and monitoring, enhanced by strong encryption and authentication. A React-based GUI is also available for easy management.
+
+---
+
+## 🚀 Features
+
+- 🔍 System Information Gathering
+- 🔐 File Upload/Download with Encryption
+- 📸 Screenshot & Webcam Capture
+- 🧠 Keylogging
+- 🧩 Process Management
+- 📋 Clipboard Monitoring
+- 🗃️ File Encryption/Decryption
+- 🔁 Persistence Across Reboots
+- 🔒 Screen Locking
+- 💬 Custom Message Display
+- 🌐 URL Opening
+- 🌐 Network Information Retrieval
+- 🧾 Command Queue for Offline Clients
+
+---
+
+## 🔐 Security
+
+- **Diffie-Hellman key exchange** for secure communications
+- **Authentication** with a pre-shared secret
+- **Rate limiting** and **exponential backoff** to prevent abuse
+
+---
+
+## ⚙️ Project Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/dee-engineer/Anubis.git
+cd Anubis
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
 pip install -r client/requirements.txt
 pip install -r server/requirements.txt
 
-
-Configure client/config/config.json and server/config/config.json with appropriate IP/port settings.
-
-Set the authentication secret in client/config/auth_secret.txt and server/config/auth_secret.txt.
-
-Run the server:
-python server/server.py
+```
 
 
-Run the GUI (optional):
-python server/server_gui.py
+# Optional
 
+```bash
+pip install build
+python -m build
+pip install dist/Anubis-1.0.0-py3-none-any.whl
+```
 
-Run the client:
+# Start project
+
+```bash
+python server/server.py / python server/server_gui.py
 python client/client.py
-
-
-
-Features
-
-System information gathering
-File upload/download
-Screenshot and webcam capture
-Keylogging
-Process management
-Clipboard operations
-File encryption/decryption
-Persistence
-Screen locking
-Message display
-URL opening
-Network information
-Command queue for offline processing
-
-Security
-
-Uses Diffie-Hellman key exchange for encryption.
-Requires authentication with a pre-shared secret.
-Implements rate limiting to prevent abuse.
-
-Ethical Use
-This tool is intended for authorized penetration testing and system administration. Use without explicit consent is illegal and unethical.
+```
