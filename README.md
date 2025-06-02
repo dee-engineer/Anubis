@@ -45,15 +45,6 @@ pip install -r server/requirements.txt
 
 ```
 
-
-# Optional
-
-```bash
-pip install build
-python -m build
-pip install dist/Anubis-1.0.0-py3-none-any.whl
-```
-
 # Start project
 
 ```bash
