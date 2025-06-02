@@ -1,0 +1,3 @@
+([('client',
+   '/Users/divine/Documents/Projects/Anubis/client/dist/client',
+   'EXECUTABLE')],)

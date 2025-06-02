@@ -1,5 +1,6 @@
 from .logging_config import logging
 from pystyle import Colors, Box
+from .state import client_info_map, targets, ips
 
 def handle_client_disconnection(target_socket):
     global targets, ips, client_info_map
@@ -29,11 +30,12 @@ def handle_client_disconnection(target_socket):
         pass
 
 def list_sessions():
+    global client_info_map
     if not client_info_map:
         print(f"\n{Colors.yellow}[-] No active client connections.{Colors.reset}")
         return
     header = " ID | USERNAME@HOSTNAME        | MAC ADDRESS         | IP ADDRESS         | CONNECTED SINCE"
-    print(f"\n{Colors.light_blue}{Box.Simple(header)}{Colors.reset}")
+    print(f"\n{Colors.light_blue}{Box.Lines(header)}{Colors.reset}")
     print(f"{Colors.light_blue}{'-' * len(header)}{Colors.reset}")
     sorted_clients = sorted(client_info_map.values(), key=lambda x: x['session_id'])
     for info in sorted_clients:
@@ -43,4 +45,4 @@ def list_sessions():
         mac_str = f"{info.get('mac', 'N/A'):<17}"
         ip_str = f"{info.get('ip_str', 'N/A'):<19}"
         connected_at_str = f"{info.get('connected_at', 'N/A')}"
-        print(f"{Colors.cyan}{session_id_str}{Colors.reset} | {Colors.green}{user_host_str}{Colors.reset}| {Colors.yellow}{mac_str}{Colors.reset}| {Colors.magenta}{ip_str}{Colors.reset}| {Colors.cyan}{connected_at_str}{Colors.reset}")
+        print(f"{Colors.cyan}{session_id_str}{Colors.reset} | {Colors.green}{user_host_str}{Colors.reset}| {Colors.yellow}{mac_str}{Colors.reset}| {Colors.purple}{ip_str}{Colors.reset}| {Colors.cyan}{connected_at_str}{Colors.reset}")

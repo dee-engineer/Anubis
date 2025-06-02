@@ -48,16 +48,19 @@ if __name__ == "__main__":
             
             if command == "help":
                 print(Colorate.Vertical(Colors.red_to_purple, """
-    **** SERVER COMMANDS MAIN MENU ****
-    targets / sessions/ list
-        Description: Display all connected clients with details.
-    session <ID>
-        Description: Interact with a specific client session.
-    cls / clear
-        Description: Clear the server console screen.
-    exit / quit
-        Description: Terminate the server and disconnect all clients.
-                """, 2))
+**** SERVER COMMANDS MAIN MENU ****
+
+  targets / sessions / list
+      Description: Display all connected clients with details.
+  session <ID>
+      Description: Interact with a specific client session.
+  cls / clear
+      Description: Clear the server console screen.
+  exit / quit
+      Description: Terminate the server and disconnect all clients.
+
+""", 2))
+                continue
             elif command in ["targets", "sessions", "list"]:
                 list_sessions()
             elif command == "session":

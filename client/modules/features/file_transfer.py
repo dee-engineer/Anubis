@@ -1,8 +1,8 @@
 import os
-from ..communication import send_data, recv_data
 from ..encryption import encrypt_data, decrypt_data
 
 def download_file(sock, file_name_to_save):
+    from ..communication import send_data, recv_data
     try:
         metadata = recv_data(sock)
         if not metadata or 'file_size_for_upload' not in metadata:
@@ -25,7 +25,9 @@ def download_file(sock, file_name_to_save):
         print(f"[!] Error in client download_file: {e}")
         send_data(sock, {"status": "error", "message": f"Client download_file exception: {str(e)}"})
 
+
 def upload_file(sock, file_name_to_send):
+    from ..communication import send_data
     try:
         if not os.path.exists(file_name_to_send):
             send_data(sock, {"status": "error", "message": f"File {file_name_to_send} not found on client."})

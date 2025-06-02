@@ -1,23 +1,27 @@
 import json
 import base64
+import os
 from cryptography.hazmat.primitives.asymmetric import dh
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 
+# Load DH parameters from PEM file in the project root
+DH_PARAMS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'dh_params.pem')
+with open(DH_PARAMS_PATH, 'rb') as f:
+    parameters = serialization.load_pem_parameters(f.read(), backend=default_backend())
+
 # Global cipher
 cipher = None
 
-# Diffie-Hellman Parameters
-parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
-
 def initialize_encryption(sock):
     global cipher
-    private_key, public_key = parameters.generate_private_key(), parameters.generate_private_key().public_key()
+    private_key = parameters.generate_private_key()
+    public_key = private_key.public_key()
     public_key_bytes = public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
-        format=serialization.PublicFormat.SubjectPublicKey
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
     sock.send(public_key_bytes)
     server_public_key_bytes = sock.recv(4096)

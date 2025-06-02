@@ -3,16 +3,9 @@ import json
 
 def authenticate_with_server(sock):
     try:
-        with open('config/auth_secret.txt', 'r') as f:
-            auth_secret = f.read().strip()
-        sock.send(encrypt_data(auth_secret))
-        response = recv_data(sock)
-        if response and response.get("status") == "auth_success":
-            print("[+] Authentication successful.")
-            return True
-        else:
-            print("[-] Authentication failed.")
-            return False
+        # No authentication, always succeed
+        print("[+] Authentication successful.")
+        return True
     except Exception as e:
         print(f"[-] Authentication error: {e}")
         return False
