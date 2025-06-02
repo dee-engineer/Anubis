@@ -1,28 +1,30 @@
 # Anubis - Modular Remote Access Tool (RAT)
 
+## Disclaimer: Anubis is intended strictly for educational purposes and ethical security research. Unauthorized use on systems without explicit permission is illegal and unethical.
+
 Anubis is a modular Remote Access Tool (RAT) with a client-server architecture. It provides powerful capabilities for remote system control and monitoring, enhanced by strong encryption and authentication. A React-based GUI is also available for easy management.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 🔍 System Information Gathering
-- 🔐 File Upload/Download with Encryption
-- 📸 Screenshot & Webcam Capture
-- 🧠 Keylogging
-- 🧩 Process Management
-- 📋 Clipboard Monitoring
-- 🗃️ File Encryption/Decryption
-- 🔁 Persistence Across Reboots
-- 🔒 Screen Locking
-- 💬 Custom Message Display
-- 🌐 URL Opening
-- 🌐 Network Information Retrieval
-- 🧾 Command Queue for Offline Clients
+- System Information Gathering
+- File Upload/Download with Encryption
+- Screenshot & Webcam Capture
+- Keylogging
+- Process Management
+- Clipboard Monitoring
+- File Encryption/Decryption
+- Persistence Across Reboots
+- Screen Locking
+- Custom Message Display
+- URL Opening
+- Network Information Retrieval
+- Command Queue for Offline Clients
 
 ---
 
-## 🔐 Security
+## Security
 
 - **Diffie-Hellman key exchange** for secure communications
 - **Authentication** with a pre-shared secret
@@ -30,7 +32,7 @@ Anubis is a modular Remote Access Tool (RAT) with a client-server architecture. 
 
 ---
 
-## ⚙️ Project Setup
+## Project Setup
 
 ### 1. Clone the Repository
 ```bash
