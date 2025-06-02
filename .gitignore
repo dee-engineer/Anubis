@@ -1,2 +1,4 @@
 /venv
 /logs
+*.log
+dh_params.pem
