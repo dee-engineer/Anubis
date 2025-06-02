@@ -1,4 +1,3 @@
-# modules/communication.py
 
 import socket
 import json
